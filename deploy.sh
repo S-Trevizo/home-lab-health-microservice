@@ -1,8 +1,4 @@
 #!/bin/bash
 set -e
-
-cd /home/xeon/repos/home-lab-dashboard
-git pull
-npm run clean
-npm install
-npm start
+git -C /home/xeon/repos/home-lab-health-microservice pull
+docker compose -f /docker/healthcheck/compose.yaml up -d --build
