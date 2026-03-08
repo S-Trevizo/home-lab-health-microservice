@@ -10,10 +10,11 @@ export async function probeService(svc: ServiceDef): Promise<HealthResult> {
   try {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), timeout);
-    console.log(`[probe] ${svc.name}`, JSON.stringify(svc.headers));
+    const headers = typeof svc.headers === "function" ? svc.headers() : svc.headers;
+    
     const res = await fetch(svc.healthUrl, {
       signal: controller.signal,
-      headers: { Accept: "application/json, text/plain, */*", ...svc.headers },
+      headers: { Accept: "application/json, text/plain, */*", ...headers },
     });
 
     clearTimeout(timer);
