@@ -4,6 +4,7 @@ export type ServiceGroup = "media" | "arr" | "observability" | "apps";
 
 export interface ServiceDef {
   name: string;
+  headers?: Record<string, string>;
   group: ServiceGroup;
   /** Public subdomain if one exists */
   subdomain?: string;

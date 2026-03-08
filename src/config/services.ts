@@ -1,4 +1,5 @@
 import type { ServiceDef } from "../types.ts";
+const arrApiHeaders = (key: string) => ({ "X-Api-Key": key });
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Service definitions
@@ -50,6 +51,7 @@ const arr: ServiceDef[] = [
     name: "Sonarr",
     group: "arr",
     healthUrl: "http://192.168.1.49:8989/api/v3/system/status",
+    headers: arrApiHeaders(process.env.SONARR_API_KEY ?? ""),
     healthCheck: (body, status) => {
       if (status !== 200) return false;
       const b = body as Record<string, unknown>;
@@ -60,6 +62,7 @@ const arr: ServiceDef[] = [
     name: "Radarr",
     group: "arr",
     healthUrl: "http://192.168.1.49:7878/api/v3/system/status",
+    headers: arrApiHeaders(process.env.RADARR_API_KEY ?? ""),
     healthCheck: (body, status) => {
       if (status !== 200) return false;
       const b = body as Record<string, unknown>;
@@ -70,6 +73,7 @@ const arr: ServiceDef[] = [
     name: "Prowlarr",
     group: "arr",
     healthUrl: "http://192.168.1.49:9696/api/v1/system/status",
+    headers: arrApiHeaders(process.env.PROWLARR_API_KEY ?? ""),
     healthCheck: (body, status) => {
       if (status !== 200) return false;
       const b = body as Record<string, unknown>;
@@ -80,6 +84,7 @@ const arr: ServiceDef[] = [
     name: "Lidarr",
     group: "arr",
     healthUrl: "http://192.168.1.49:8686/api/v1/system/status",
+    headers: arrApiHeaders(process.env.LIDARR_API_KEY ?? ""),
     healthCheck: (body, status) => {
       if (status !== 200) return false;
       const b = body as Record<string, unknown>;
@@ -90,6 +95,7 @@ const arr: ServiceDef[] = [
     name: "Bazarr",
     group: "arr",
     healthUrl: "http://192.168.1.49:6767/api/system/status",
+    headers: arrApiHeaders(process.env.BAZARR_API_KEY ?? ""),
     healthCheck: (_, status) => status === 200,
   },
 ];

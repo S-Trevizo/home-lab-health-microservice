@@ -13,7 +13,7 @@ export async function probeService(svc: ServiceDef): Promise<HealthResult> {
 
     const res = await fetch(svc.healthUrl, {
       signal: controller.signal,
-      headers: { Accept: "application/json, text/plain, */*" },
+      headers: { Accept: "application/json, text/plain, */*", ...svc.headers },
     });
 
     clearTimeout(timer);
