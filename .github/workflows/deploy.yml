@@ -17,4 +17,3 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: ${{ secrets.SSH_SCRIPT }}
-          proxy_key: ${{ secrets.SSH_PRIVATE_KEY }}
