@@ -149,14 +149,14 @@ const observability: ServiceDef[] = [
 
 const apps: ServiceDef[] = [
   {
-    name: "Firefly III",
+    name: "Firefly",
     group: "apps",
     subdomain: "https://firefly.xeon.quest",
     healthUrl: "http://192.168.1.49:8282/health",
     healthCheck: (_, status) => status === 200,
   },
   {
-    name: "Foundry VTT",
+    name: "Foundry",
     group: "apps",
     subdomain: "https://foundry.xeon.quest",
     healthUrl: "http://192.168.1.49:30000/api/status",
@@ -180,7 +180,7 @@ const apps: ServiceDef[] = [
     },
   },
   {
-    name: "Calibre-Web",
+    name: "CalibreWeb",
     group: "apps",
     subdomain: "https://books.xeon.quest",
     healthUrl: "http://192.168.1.49:8082",
