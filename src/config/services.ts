@@ -111,8 +111,13 @@ const arr: ServiceDef[] = [
   {
     name: "Bookshelf",
     group: "arr",
-    healthUrl: "http://192.168.1.49:8787",
-    healthCheck: (_, status) => status === 200 || status === 302,
+    healthUrl: "http://192.168.1.49:8787/api/v1/system/status",
+    headers: () => ({ "X-Api-Key": process.env.BOOKSHELF_API_KEY ?? "" }),
+    healthCheck: (body, status) => {
+      if (status !== 200) return false;
+      const b = body as Record<string, unknown>;
+      return typeof b?.version === "string";
+    },
   },
 ];
 
@@ -167,7 +172,7 @@ const apps: ServiceDef[] = [
     name: "Nextcloud",
     group: "apps",
     subdomain: "https://cloud.xeon.quest",
-    healthUrl: "http://192.168.1.49:8384/status.php",
+    healthUrl: "https://cloud.xeon.quest/status.php",
     healthCheck: (body, status) => {
       if (status !== 200) return false;
       const b = body as Record<string, unknown>;
@@ -185,7 +190,7 @@ const apps: ServiceDef[] = [
     name: "Calibre",
     group: "apps",
     healthUrl: "http://192.168.1.49:8083",
-    healthCheck: (_, status) => status === 200 || status === 302,
+    healthCheck: (_, status) => status === 200 || status === 302 || status === 401,
   },
 ];
 
