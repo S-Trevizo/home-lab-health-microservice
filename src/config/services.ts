@@ -43,6 +43,17 @@ const media: ServiceDef[] = [
       return b?.status === "ok" || typeof b?.version === "string";
     },
   },
+  {
+    name: "Immich",
+    group: "media",
+    subdomain: "https://photos.xeon.quest",
+    healthUrl: "http://192.168.1.49:2283/api/server/ping",
+    healthCheck: (body, status) => {
+      if (status !== 200) return false;
+      const b = body as Record<string, unknown>;
+      return b?.res === "pong";
+    },
+  },
 ];
 
 const arr: ServiceDef[] = [
@@ -97,6 +108,12 @@ const arr: ServiceDef[] = [
     headers: () => ({ "X-Api-Key": process.env.BAZARR_API_KEY ?? "" }),
     healthCheck: (_, status) => status === 200,
   },
+  {
+    name: "Bookshelf",
+    group: "arr",
+    healthUrl: "http://192.168.1.49:8787",
+    healthCheck: (_, status) => status === 200 || status === 302,
+  },
 ];
 
 const observability: ServiceDef[] = [
@@ -145,6 +162,30 @@ const apps: ServiceDef[] = [
     group: "apps",
     healthUrl: "http://192.168.1.49:81/api",
     healthCheck: (_, status) => status < 500,
+  },
+  {
+    name: "Nextcloud",
+    group: "apps",
+    subdomain: "https://cloud.xeon.quest",
+    healthUrl: "http://192.168.1.49:8384/status.php",
+    healthCheck: (body, status) => {
+      if (status !== 200) return false;
+      const b = body as Record<string, unknown>;
+      return b?.installed === true && b?.maintenance === false;
+    },
+  },
+  {
+    name: "Calibre-Web",
+    group: "apps",
+    subdomain: "https://books.xeon.quest",
+    healthUrl: "http://192.168.1.49:8082",
+    healthCheck: (_, status) => status === 200 || status === 302,
+  },
+  {
+    name: "Calibre",
+    group: "apps",
+    healthUrl: "http://192.168.1.49:8083",
+    healthCheck: (_, status) => status === 200 || status === 302,
   },
 ];
 
