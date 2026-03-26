@@ -33,9 +33,9 @@ const media: ServiceDef[] = [
     healthCheck: (_, status) => status === 200,
   },
   {
-    name: "Overseerr",
+    name: "Seerr",
     group: "media",
-    subdomain: "https://overseerr.xeon.quest",
+    subdomain: "https://seerr.xeon.quest",
     healthUrl: "http://192.168.1.49:5055/api/v1/status",
     healthCheck: (body, status) => {
       if (status !== 200) return false;
